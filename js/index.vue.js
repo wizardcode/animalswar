@@ -144,14 +144,18 @@ var app = new Vue({
 				$target_left = e.target.style.left;
 				$target_id = e.target.getAttribute('id');
 				$item_self = document.getElementsByClassName('choose');
+				console.log(e.target.style.backgroundImage);
 				if($item_self[0] == undefined) {
-					e.target.style.background = 'url(' + this.animals[$target_id].img;
-				} else if(e.target.style.background == 'url("img/default.jpg")') {
+					e.target.style.backgroundImage = 'url(' + this.animals[$target_id].img;
+				} else if(e.target.style.backgroundImage == 'url("img/default.jpg")') {
 					this.isChoose = -1;
 					$item_self[0].classList.remove('choose');
 				} else {
 					$item_id = $item_self[0].getAttribute('id');
-					if(this.animals[$item_id].level < this.animals[$target_id].level && this.animals[$item_id].player != this.animals[$target_id].player) {
+					if(this.animals[$item_id].level == this.animals[$target_id].level - 7 && this.animals[$item_id].player != this.animals[$target_id].player) {
+						this.isChoose = -1;
+						$item_self[0].classList.remove('choose');
+					} else if((this.animals[$item_id].level < this.animals[$target_id].level || this.animals[$item_id].level == this.animals[$target_id].level + 7) && this.animals[$item_id].player != this.animals[$target_id].player) {
 						this.animals[$target_id].show = 0;
 						this.isChoose = -1;
 						$item_self[0].style.top = $target_top;

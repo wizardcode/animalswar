@@ -15,7 +15,7 @@
 				<div class="back" v-for="(item,index) in 9" :id="gernerateId(index)"></div>
 				<div class="buttom" v-for="(item,index) in animals" :style="{'left':(index%4)*200+50 +'px','top':parseInt(index/4)*200+50+'px'}" :id="gernerateBtmId(index)" @click="moveblank($event)">
 				</div>
-				<div v-model="isChoose" v-show="item.show===1" v-bind:class="{'item':true,'choose':index==isChoose}" v-for="(item,index) in animals" style="background: url(img/default.jpg)" :style="{'left':(index%4)*200+50 +'px','top':parseInt(index/4)*200+45+'px'}" :id="gernerateItemId(index)" @dblclick="choose(index)" @click="moveitem($event)">
+				<div class="item" v-model="isChoose" v-show="item.show===1" :class="{'choose':index==isChoose}" v-for="(item,index) in animals" style="background-image: url(img/default.jpg)" :style="{'left':(index%4)*200+50 +'px','top':parseInt(index/4)*200+45+'px'}" :id="gernerateItemId(index)" @dblclick="choose(index)" @click="moveitem($event)">
 
 				</div>
 			</div>
