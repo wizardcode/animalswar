@@ -1,0 +1,39 @@
+#contain {
+	padding: 100px;
+	width: 800px;
+	height: 900px;
+	margin: 0 auto;
+	position: relative;
+	background-color: #6495ED;
+}
+
+#contain .back {
+	width: 200px;
+	height: 200px;
+	float: left;
+	background-color: #6495ED;
+	border: 1px dashed #ffffff;
+}
+
+.item {
+	width: 100px;
+	height: 130px;
+	background-color: red;
+	left: 50px;
+	top: 65px;
+	position: absolute;
+}
+
+.buttom {
+	width: 100px;
+	height: 100px;
+	background-color: #FAEBD7;
+	left: 50px;
+	top: 50px;
+	border-radius: 50px;
+	position: absolute;
+}
+
+.choose {
+	border: 2px dotted #FFFFFF;
+}
