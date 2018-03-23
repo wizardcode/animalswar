@@ -173,10 +173,14 @@ var app = new Vue({
 					this.isChoose = -1;
 					$item_self[0].classList.remove('choose');
 				} else if($item_self[0] == undefined && $background > 0) { //在没有选中的情况下，单击未掀开的动物可掀开
-					clearTimeout(this.timeID);
+					clearTimeout(this.timeID);					
 					e.target.style.backgroundImage = 'url(' + this.animals[$target_id].img + ')'; //加载动物图片
 					this.available = 0; //掀牌时修改记录值
-					this.players = 3 - this.players; //控制权移交另一玩家
+					if(this.players===0){//记录第一次掀牌的玩家id
+						this.players=this.animals[$target_id].player;
+					}else{
+						this.players = 3 - this.players; //控制权移交另一玩家
+					}
 					this.timeID = setTimeout(function() { //保证在掀牌时双击或多击事件只触发单击操作，不出现选中情况
 						app.available = 1;
 					}, 500); //500毫秒后恢复记录值，确保可进行正常操作
@@ -222,7 +226,6 @@ var app = new Vue({
 				}
 			},
 			moveblank: function(e) { //点击空白处触发事件
-				clearTimeout(this.timeID);
 				$target_top = e.target.style.top; //获取目的地的坐标地址
 				$target_left = e.target.style.left;
 				$item_self = document.getElementsByClassName('choose'); //获取已选中的DOM
@@ -237,7 +240,6 @@ var app = new Vue({
 				}
 			},
 			movesafe: function(e) { //点击安全区域，触发此事件
-				clearTimeout(this.timeID);
 				$target_top = e.target.style.top; //获取目的地的坐标地址
 				$target_left = e.target.style.left;
 				$item_self = document.getElementsByClassName('choose');
