@@ -12,7 +12,7 @@ var app = new Vue({
 				player: 1,
 				show: 1,
 				img: 'img/1.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 2,
 				level: 2,
@@ -20,7 +20,7 @@ var app = new Vue({
 				player: 1,
 				show: 1,
 				img: 'img/2.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 3,
 				level: 3,
@@ -28,7 +28,7 @@ var app = new Vue({
 				player: 1,
 				show: 1,
 				img: 'img/3.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 4,
 				level: 4,
@@ -36,7 +36,7 @@ var app = new Vue({
 				player: 1,
 				show: 1,
 				img: 'img/4.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 5,
 				level: 5,
@@ -44,7 +44,7 @@ var app = new Vue({
 				player: 1,
 				show: 1,
 				img: 'img/5.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 6,
 				level: 6,
@@ -52,7 +52,7 @@ var app = new Vue({
 				player: 1,
 				show: 1,
 				img: 'img/6.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 7,
 				level: 7,
@@ -60,7 +60,7 @@ var app = new Vue({
 				player: 1,
 				show: 1,
 				img: 'img/7.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 8,
 				level: 8,
@@ -68,7 +68,7 @@ var app = new Vue({
 				player: 1,
 				show: 1,
 				img: 'img/8.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 9,
 				level: 1,
@@ -76,7 +76,7 @@ var app = new Vue({
 				player: 2,
 				show: 1,
 				img: 'img/9.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 10,
 				level: 2,
@@ -84,7 +84,7 @@ var app = new Vue({
 				player: 2,
 				show: 1,
 				img: 'img/10.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 11,
 				level: 3,
@@ -92,7 +92,7 @@ var app = new Vue({
 				player: 2,
 				show: 1,
 				img: 'img/11.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 12,
 				level: 4,
@@ -100,7 +100,7 @@ var app = new Vue({
 				player: 2,
 				show: 1,
 				img: 'img/12.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 13,
 				level: 5,
@@ -108,7 +108,7 @@ var app = new Vue({
 				player: 2,
 				show: 1,
 				img: 'img/13.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 14,
 				level: 6,
@@ -116,7 +116,7 @@ var app = new Vue({
 				player: 2,
 				show: 1,
 				img: 'img/14.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 15,
 				level: 7,
@@ -124,7 +124,7 @@ var app = new Vue({
 				player: 2,
 				show: 1,
 				img: 'img/15.png',
-				safe:0,
+				safe: 0,
 			}, {
 				id: 16,
 				level: 8,
@@ -132,7 +132,7 @@ var app = new Vue({
 				player: 2,
 				show: 1,
 				img: 'img/16.png',
-				safe:0,
+				safe: 0,
 			}, ]
 		},
 		created: function() {
@@ -143,19 +143,8 @@ var app = new Vue({
 				};
 			}
 			this.animals.shuffle();
-			this.animals.shuffle();
 		},
 		methods: {
-			choose: function(index) {
-				if(this.available === 0) {//若刚触发掀牌操作，则恢复记录值，不进行其他操作
-					this.available = 1;
-				} else {
-					if(this.animals[index].player != this.players) {
-						this.isChoose = index;
-					}					
-				}
-				clearTimeout(this.timeID);
-			},
 			gernerateId: function(index) {
 				return "back_" + index;
 			},
@@ -165,58 +154,75 @@ var app = new Vue({
 			gernerateItemId: function(index) {
 				return index;
 			},
-			safeId:function(index){
-				return 'safe_'+index;
+			safeId: function(index) {
+				return 'safe_' + index;
 			},
 			moveitem: function(e) {
-				$target_top = e.target.style.top;//单击目标位置
+				$target_top = e.target.style.top; //单击目标位置
 				$target_left = e.target.style.left;
-				$target_id = e.target.getAttribute('id');//单击目标id
-				$item_self = document.getElementsByClassName('choose');//已选中DOM
-				$background = e.target.style.backgroundImage.indexOf("img/default.jpg");//获取目标图片属性，后续判断目标是否被掀开。
-				if($item_self[0] == undefined) { //判断当前是否有选中DOM
-					if($background > 0) { //无选中DOM下，若背景为默认背景，则执行掀牌效果操作。
-						e.target.style.backgroundImage = 'url(' + this.animals[$target_id].img + ')';//加载动物图片
-						this.available = 0; //掀牌时修改记录值
-						this.players = 3-this.players;//控制权移交另一玩家
-						this.timeID = setTimeout(function() { //保证在掀牌时双击或多击事件只触发单击操作，不出现选中情况
-							app.available = 1;
-						}, 500); //500毫秒后恢复记录值，确保可进行双击操作
-					}
-				} else if($background > 0) {//双击选中动物后，单击未掀开的动物，禁止操作
-					this.isChoose = -1;
-					$item_self[0].classList.remove('choose');
-				} else {//双击选中动物后，单击掀开动物执行此后操作。
-					$item_id = $item_self[0].getAttribute('id');//获取目标id
-					if(this.animals[$target_id].safe===1){//若动物在保护区，不能对目标采取任何操作。
+				$target_id = e.target.getAttribute('id'); //单击目标id
+				$item_self = document.getElementsByClassName('choose'); //已选中DOM
+				$background = e.target.style.backgroundImage.indexOf("img/default.jpg"); //获取目标图片属性，后续判断目标是否被掀开。
+				if(this.available == 0) { //快速点击时，进入以下逻辑
+					if($background > 0 && $item_self[0] != undefined) { //保证未掀开时多击取消选择。
 						this.isChoose = -1;
 						$item_self[0].classList.remove('choose');
-					}else if(this.animals[$item_id].level == this.animals[$target_id].level - 7) {//禁止大象吃鼠
+					}
+					//else中缺省，有种在掀开牌时快速双击保持选中状态。
+				} else if($background > 0 && $item_self[0] != undefined) {//保证选中的动物目的地为未掀开动物时无效
+					this.isChoose = -1;
+					$item_self[0].classList.remove('choose');
+				} else if($item_self[0] == undefined && $background > 0) { //在没有选中的情况下，单击未掀开的动物可掀开
+					clearTimeout(this.timeID);
+					e.target.style.backgroundImage = 'url(' + this.animals[$target_id].img + ')'; //加载动物图片
+					this.available = 0; //掀牌时修改记录值
+					this.players = 3 - this.players; //控制权移交另一玩家
+					this.timeID = setTimeout(function() { //保证在掀牌时双击或多击事件只触发单击操作，不出现选中情况
+						app.available = 1;
+					}, 500); //500毫秒后恢复记录值，确保可进行正常操作
+				} else if($background < 0 && $item_self[0] == undefined) { //在未选择情况下，单击已掀开的动物可进行选择
+					clearTimeout(this.timeID);
+					this.available = 0; //掀牌时修改记录值
+					if(this.animals[$target_id].player != this.players) {
+						this.isChoose = $target_id;
+					}
+					this.timeID = setTimeout(function() { //保证在掀牌时双击或多击事件只触发单击操作，不出现选中情况
+						app.available = 1;
+					}, 500); //500毫秒后恢复记录值，确保可进行正常操作
+
+				} else { //选中动物后，单击掀开动物执行此后操作。
+					clearTimeout(this.timeID);
+					$item_id = $item_self[0].getAttribute('id'); //获取目标id
+					if(this.animals[$target_id].safe === 1) { //若动物在保护区，不能对目标采取任何操作。
+						this.isChoose = -1;
+						$item_self[0].classList.remove('choose');
+					} else if(this.animals[$item_id].level == this.animals[$target_id].level - 7) { //禁止大象吃鼠
 						this.isChoose = -1;
 						$item_self[0].classList.remove('choose');
 						//高战斗力可干掉低战斗力者，同时保证鼠可以干掉大象
 					} else if((this.animals[$item_id].level < this.animals[$target_id].level || this.animals[$item_id].level == this.animals[$target_id].level + 7) && this.animals[$item_id].player != this.animals[$target_id].player) {
-						this.animals[$target_id].show = 0;//目标被干掉
-						this.isChoose = -1;//移除选中动物
+						this.animals[$target_id].show = 0; //目标被干掉
+						this.isChoose = -1; //移除选中动物
 						$item_self[0].style.top = $target_top;
 						$item_self[0].style.left = $target_left;
-						this.players = this.animals[$item_id].player;//记录玩家id
-						this.animals[$item_id].safe=0;//恢复正常模式
+						this.players = this.animals[$item_id].player; //记录玩家id
+						this.animals[$item_id].safe = 0; //恢复正常模式
 						$item_self[0].classList.remove('choose');
 						//同一战斗力的不同方可以同归于尽
 					} else if(this.animals[$item_id].level == this.animals[$target_id].level && this.animals[$item_id].player != this.animals[$target_id].player) {
-						this.animals[$item_id].show = 0;//目标双双被干掉
+						this.animals[$item_id].show = 0; //目标双双被干掉
 						this.animals[$target_id].show = 0;
 						this.players = this.animals[$item_id].player;
 						this.isChoose = -1;
 						$item_self[0].classList.remove('choose');
-					} else {//不符合规则的操作到此
+					} else { //不符合规则的操作到此
 						this.isChoose = -1;
 						$item_self[0].classList.remove('choose');
 					}
 				}
 			},
 			moveblank: function(e) { //点击空白处触发事件
+				clearTimeout(this.timeID);
 				$target_top = e.target.style.top; //获取目的地的坐标地址
 				$target_left = e.target.style.left;
 				$item_self = document.getElementsByClassName('choose'); //获取已选中的DOM
@@ -227,21 +233,22 @@ var app = new Vue({
 					$item_self[0].style.left = $target_left;
 					$item_self[0].classList.remove('choose'); //取消选择样式
 					this.players = this.animals[$item_id].player; //记录玩家操作
-					this.animals[$item_id].safe=0;//恢复正常模式
+					this.animals[$item_id].safe = 0; //恢复正常模式
 				}
 			},
-			movesafe:function(e){//点击安全区域，触发此事件
+			movesafe: function(e) { //点击安全区域，触发此事件
+				clearTimeout(this.timeID);
 				$target_top = e.target.style.top; //获取目的地的坐标地址
 				$target_left = e.target.style.left;
 				$item_self = document.getElementsByClassName('choose');
-				if($item_self[0] == undefined){}else{
+				if($item_self[0] == undefined) {} else {
 					$item_id = $item_self[0].getAttribute('id'); //获取动物ID
 					this.isChoose = -1; //取消选择
 					$item_self[0].style.top = $target_top; //移动选中动物到目的地
 					$item_self[0].style.left = $target_left;
 					$item_self[0].classList.remove('choose'); //取消选择样式
 					this.players = this.animals[$item_id].player; //记录玩家操作
-					this.animals[$item_id].safe=1;//安全，不可被杀死。
+					this.animals[$item_id].safe = 1; //安全，不可被杀死。
 				}
 			}
 		},
