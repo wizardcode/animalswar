@@ -1,3 +1,26 @@
+var timer=setInterval("victory()",20000);
+var victory=function(){
+	var player1=0;
+	var player2=0;
+	for(var i=0;i<app.animals.length; i++){
+		if(app.animals[i].player==1 && app.animals[i].show==0 ){
+			player1++;
+		}
+		if(app.animals[i].player==2 && app.animals[i].show==0 ){
+			player2++;
+		}
+	}
+	if(player1*2==app.animals.length && player1==player2){
+		alert('游戏结束，竟然是平局！');
+		clearInterval(timer);		
+	}else if(player1*2==app.animals.length){
+		alert('游戏结束，红方胜出！');
+		clearInterval(timer);		
+	}else if(player2*2==app.animals.length){
+		alert('游戏结束，蓝方胜出！');
+		clearInterval(timer);
+	}
+}
 var app = new Vue({
 		el: '#app',
 		data: {
@@ -167,13 +190,15 @@ var app = new Vue({
 					if($background > 0 && $item_self[0] != undefined) { //保证未掀开时多击取消选择。
 						this.isChoose = -1;
 						$item_self[0].classList.remove('choose');
-					}
+					}					
 					//else中缺省，有种在掀开牌时快速双击保持选中状态。
+					this.timeID = setTimeout(function() { //保证在掀牌时双击或多击事件只触发单击操作，不出现选中情况
+						app.available = 1;
+					}, 1000); //确保出现意外是，快速单击恢复正常。
 				} else if($background > 0 && $item_self[0] != undefined) {//保证选中的动物目的地为未掀开动物时无效
 					this.isChoose = -1;
 					$item_self[0].classList.remove('choose');
 				} else if($item_self[0] == undefined && $background > 0) { //在没有选中的情况下，单击未掀开的动物可掀开
-					clearTimeout(this.timeID);					
 					e.target.style.backgroundImage = 'url(' + this.animals[$target_id].img + ')'; //加载动物图片
 					this.available = 0; //掀牌时修改记录值
 					if(this.players===0){//记录第一次掀牌的玩家id
@@ -183,19 +208,18 @@ var app = new Vue({
 					}
 					this.timeID = setTimeout(function() { //保证在掀牌时双击或多击事件只触发单击操作，不出现选中情况
 						app.available = 1;
-					}, 500); //500毫秒后恢复记录值，确保可进行正常操作
+					}, 250); //250毫秒后恢复记录值，确保可进行正常操作
 				} else if($background < 0 && $item_self[0] == undefined) { //在未选择情况下，单击已掀开的动物可进行选择
-					clearTimeout(this.timeID);
+					clearTimeout(this.timeID);//只在选择是进行清除定时器，若多个地方组合使用，容易出现问题。
 					this.available = 0; //掀牌时修改记录值
 					if(this.animals[$target_id].player != this.players) {
 						this.isChoose = $target_id;
 					}
 					this.timeID = setTimeout(function() { //保证在掀牌时双击或多击事件只触发单击操作，不出现选中情况
 						app.available = 1;
-					}, 500); //500毫秒后恢复记录值，确保可进行正常操作
+					}, 250); //250毫秒后恢复记录值，确保可进行正常操作
 
 				} else { //选中动物后，单击掀开动物执行此后操作。
-					clearTimeout(this.timeID);
 					$item_id = $item_self[0].getAttribute('id'); //获取目标id
 					if(this.animals[$target_id].safe === 1) { //若动物在保护区，不能对目标采取任何操作。
 						this.isChoose = -1;
