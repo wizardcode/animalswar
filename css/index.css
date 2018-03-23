@@ -1,18 +1,18 @@
 #contain {
 	padding: 100px;
 	width: 800px;
-	height: 900px;
+	height: 800px;
 	margin: 0 auto;
 	position: relative;
-	background-color: #6495ED;
+	background-image: url(../img/back.gif);
+	background-size: 800px 800px;
 }
 
 #contain .back {
 	width: 200px;
 	height: 200px;
 	float: left;
-	background-color: #6495ED;
-	border: 1px dashed #ffffff;
+	border: 2px dashed #ffffff;
 }
 
 .item {
@@ -30,16 +30,18 @@
 	left: 50px;
 	top: 50px;
 	border-radius: 50px;
+	opacity: 0.4;
 	position: absolute;
 }
 
 .safe {
 	width: 100px;
 	height: 130px;
-	background-color: #398439;
+	background-image: url(../img/safe.png);
 	position: absolute;
 }
 
 .choose {
-	border: 2px dotted #FFFFFF;
+	/*border: 2px dotted #FFFFFF;*/
+	box-shadow: 0px 0px 8px 8px #FFFFFF;
 }
