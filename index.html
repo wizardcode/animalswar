@@ -5,22 +5,23 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta name="renderer" content="webkit">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=800, maximum-scale=1.0">
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="css/index.css" />
 		<title>象狮虎豹狼狗猫鼠</title>
 	</head>
 
 	<body>
-		<div id="app">
+		<div id="backbox">
 			<div id="contain">
-
-				<div class="back" v-for="(item,index) in 9" :id="gernerateId(index)"></div>
-				<div class="buttom" v-for="(item,index) in animals" :style="{'left':(index%4)*200+50 +'px','top':parseInt(index/4)*200+50+'px'}" :id="gernerateBtmId(index)" @click="moveblank($event)">
-				</div>
-				<div class="safe" v-for="(item,index) in 4" :style="{'left':(index%2)*400+150+'px','top':parseInt(index/2)*400+135+'px'}" :id="safeId(index)" @click="movesafe($event)"></div>
-				<div class="item" v-model="isChoose" v-show="item.show===1" :class="{'choose':index==isChoose}" v-for="(item,index) in animals" style="background-image: url(img/default.jpg)" :style="{'left':(index%4)*200+50 +'px','top':parseInt(index/4)*200+45+'px'}" :id="gernerateItemId(index)" @click="moveitem($event)">
-
+				<div id="app">
+					<div class="back" v-for="(item,index) in 9" :id="gernerateId(index)"></div>
+					<div class="buttom" v-for="(item,index) in animals" :style="{'left':(index%4)*200+50 +'px','top':parseInt(index/4)*200+50+'px'}" :id="gernerateBtmId(index)" @click="moveblank($event)">
+					</div>
+					<div class="safe" v-for="(item,index) in 4" :style="{'left':(index%2)*400+150+'px','top':parseInt(index/2)*400+135+'px'}" :id="safeId(index)" @click="movesafe($event)"></div>
+					<div class="item" v-model="isChoose" v-show="item.show===1" :class="{'choose':index==isChoose}" v-for="(item,index) in animals" style="background-image: url(img/default.jpg)" :style="{'left':(index%4)*200+50 +'px','top':parseInt(index/4)*200+45+'px'}" :id="gernerateItemId(index)" @click="moveitem($event)">
+					
+					</div>
 				</div>
 			</div>
 		</div>
