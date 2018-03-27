@@ -255,12 +255,16 @@ var app = new Vue({
 			}
 		},
 		mounted: function() {
-			var height = window.screen.height;
-			var width = window.screen.width;
-			var top = (height - width) / 2;
-			if(top > 0) {
-				document.getElementById('backbox').style.marginTop = top + 'px';
+			var u = navigator.userAgent;
+			if(u.indexOf('Android') > -1 || u.indexOf('iPhone') > -1 || u.indexOf('Windows Phone') > -1 || u.indexOf('iPod') > -1) {
+				var width = window.screen.width;
+				var height = window.screen.height;
+				var top = parseInt((height - width) / 2);
+				if(top > 0) {
+					document.getElementById('backbox').style.marginTop = top + 'px';
+				}
 			}
+
 		}
 	}
 
