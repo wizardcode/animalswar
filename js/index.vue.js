@@ -289,17 +289,20 @@ function gameResult() {
 		if(data[i]['show'] == 0 && data[i]['player'] == 1) {
 			plays1++;
 		} else if(data[i]['show'] == 0 && data[i]['player'] == 2) {
-			player2++;
+			plays2++;
 		}
 		if(plays1 == plays2 && plays1 == 8) {
+			clearInterval(restltID);
 			app.result('平局！');
 		} else if(plays1 == 8) {
-			app.result('蓝方胜出！');
-		} else if(plays2 == 8) {
+			clearInterval(restltID);
 			app.result('红方胜出！');
+		} else if(plays2 == 8) {
+			clearInterval(restltID);
+			app.result('蓝方胜出！');
 		}
 	}
 }
-setInterval(function() {
+var restltID=setInterval(function() {
 	gameResult();
 }, 2000);
