@@ -142,9 +142,20 @@ var app = new Vue({
 					return this;
 				};
 			}
-			this.animals.shuffle();
+			for(var j = 0; j < 100; j++) {
+				this.animals.shuffle();
+			}
 		},
 		methods: {
+			result: function(info) {
+				this.$confirm('' + info, '游戏结果', {
+					confirmButtonText: '再来一局',
+					cancelButtonText: '关闭',
+				}).then(() => {
+					location.reload();
+				}).catch(() => {
+				});
+			},
 			gernerateId: function(index) {
 				return "back_" + index;
 			},
@@ -269,3 +280,26 @@ var app = new Vue({
 	}
 
 )
+
+function gameResult() {
+	var data = app.animals;
+	var plays1 = 0;
+	var plays2 = 0;
+	for(var i = 0; i < data.length; i++) {
+		if(data[i]['show'] == 0 && data[i]['player'] == 1) {
+			plays1++;
+		} else if(data[i]['show'] == 0 && data[i]['player'] == 2) {
+			player2++;
+		}
+		if(plays1 == plays2 && plays1 == 8) {
+			app.result('平局！');
+		} else if(plays1 == 8) {
+			app.result('蓝方胜出！');
+		} else if(plays2 == 8) {
+			app.result('红方胜出！');
+		}
+	}
+}
+setInterval(function() {
+	gameResult();
+}, 2000);
